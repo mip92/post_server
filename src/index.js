@@ -4,7 +4,6 @@ require("dotenv").config({
 })
 const PORT = process.env.PORT
 const sequelize= require('./db')
-
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const errorMiddleware=require('./middlwares/error-middleware')
@@ -12,11 +11,13 @@ const router = require('./routes')
 
 const app =express()
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
     credentials:true,
     origin: process.env.CLIENT_URL
 }))
 app.use('/api',router)
+app.use(errorMiddleware)
 const start = async () => {
     try {
         await sequelize.authenticate()

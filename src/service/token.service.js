@@ -21,6 +21,11 @@ class TokenService{
         return await Token.create({userId, refreshToken})
     }
 
+    async removeToken(refreshToken) {
+        const tokenData = await Token.destroy({where: {refreshToken}})
+        return tokenData
+    }
+
     validateAccessToken(token) {
         try {
             const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET)
@@ -39,16 +44,5 @@ class TokenService{
         }
     }
 
-
-
-    async removeToken(refreshToken) {
-        const tokenData = await this.tokenRepository.destroy({where: {refreshToken}})
-        return tokenData
-    }
-
-    async findToken(refreshToken) {
-        const tokenData = await this.tokenRepository.findOne({where: {refreshToken}})
-        return tokenData
-    }
 }
 module.exports= new TokenService()

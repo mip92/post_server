@@ -1,24 +1,27 @@
 const Router = require('express').Router;
 const router = new Router();
-const userController = require('../controller/user.controller')
+const postController = require('../controller/post.controller')
 const checkRole = require('../middlwares/checkRoleMiddleware')
 const checkRules = require('../middlwares/checkRulesMiddleware')
 const {body} = require('express-validator');
 
-/*validationCreateUserBodyRules = [
-    body('name', "name must be longer than 3 symbols").isLength({min: 3}).not().isEmpty().escape(),
-    body('email', 'email must be a valid email format').not().isEmpty().isEmail().normalizeEmail()
+validationCreatePostRules = [
+    body('userId', "userId must be longer than 3 symbols").not().isEmpty().escape(),
+    body('header', "header must be longer than 3 symbols").isLength({min: 3}).not().isEmpty().escape(),
+    body('text', "text must be longer than 3 symbols").isLength({min: 3}).not().isEmpty().escape(),
 ];
-validationUpdateUserBodyRules = [
-    body('id', 'id is required').not().isEmpty().escape(),
-    body('newEmail', 'email must be a valid email format').not().isEmpty().isEmail().normalizeEmail(),
-    body('newName', "name must be longer than 3 symbols").isLength({min: 3}).not().isEmpty().escape(),
-];*/
-/*
-router.post('/', validationCreateUserBodyRules, checkRules, userController.createUser);
-router.get('/',checkRole("ADMIN"), userController.getAllUsers);
-router.get('/:userId',checkRole("ADMIN"), userController.getOneUser);
-router.put('/',checkRole("ADMIN"), userController.updateUser);
-router.delete('/:userId',checkRole("ADMIN"),  userController.deleteUser);*/
+
+validationUpdatePostRules = [
+    body('postId', "userId must be longer than 3 symbols").not().isEmpty().escape(),
+    body('userId', "userId must be longer than 3 symbols").not().isEmpty().escape(),
+    body('header', "header must be longer than 3 symbols").isLength({min: 3}).not().isEmpty().escape(),
+    body('text', "text must be longer than 3 symbols").isLength({min: 3}).not().isEmpty().escape(),
+];
+
+router.post('/',checkRole("USER"), validationCreatePostRules, checkRules, postController.createPost);
+router.get('/',checkRole("ADMIN"), postController.getPosts);
+router.get('/:userId',checkRole("ADMIN"), postController.getOnePost);
+router.put('/', validationUpdatePostRules, checkRules, postController.updatePost);
+router.delete('/:userId', postController.deletePost);
 
 module.exports = router

@@ -6,6 +6,7 @@ const User = sequelize.define('user', {
     email: {type: DataTypes.STRING, unique: true, allowNull: false},
     role: {type: DataTypes.STRING, defaultValue: "USER"},
     name:{type: DataTypes.STRING, allowNull: false},
+    password:{type: DataTypes.STRING, allowNull: false},
 })
 
 const Token = sequelize.define('token', {
@@ -20,9 +21,17 @@ const Token = sequelize.define('token', {
     }
 })
 
-const Post = sequelize.define('order', {
+const Post = sequelize.define('post', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    header: {type: DataTypes.STRING, allowNull: false},
     text: {type: DataTypes.STRING, allowNull: false},
+    userId: {
+        type: DataTypes.INTEGER, unique: true,
+        references: {
+            model: User,
+            key: 'id'
+        }
+    }
 })
 
 User.hasMany(Post);
