@@ -13,9 +13,9 @@ class PostService {
         if (decoded.role !== "USER") throw ApiError.Forbiden("Forbiden")
         if (decoded.id !==userId) throw ApiError.UnauthorizedError()
         const user = await User.findOne({where: {id: userId}})
-        if (!user) return throw ApiError.BadRequest("User not found")
+        if (!user) throw ApiError.BadRequest("User not found")
         const post = await Post.findOne({where: {id: postId}})
-        if (!post) return throw ApiError.BadRequest("Post not found")
+        if (!post) throw ApiError.BadRequest("Post not found")
         return post
     }
 }
