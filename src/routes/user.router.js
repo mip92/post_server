@@ -13,7 +13,7 @@ validationUpdateRules = [
     body('id', "id must be valid").not().isEmpty().escape(),
 ];
 
-router.get('/',checkRole("ADMIN"), userController.getUsers);
+router.get('/',checkRole("USER"), userController.getUsers);
 router.get('/:userId',checkRole("ADMIN"), userController.getOneUser);
 router.put('/',checkRole("ADMIN"), validationUpdateRules, checkRules, userController.updateUser);
 router.delete('/:userId',checkRole("ADMIN"),  userController.deleteUser);

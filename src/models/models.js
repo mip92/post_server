@@ -26,7 +26,7 @@ const Post = sequelize.define('post', {
     header: {type: DataTypes.STRING, allowNull: false},
     text: {type: DataTypes.STRING, allowNull: false},
     userId: {
-        type: DataTypes.INTEGER, unique: true,
+        type: DataTypes.INTEGER,
         references: {
             model: User,
             key: 'id'
