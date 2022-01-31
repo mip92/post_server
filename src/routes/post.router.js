@@ -19,7 +19,7 @@ validationUpdatePostRules = [
 ];
 
 router.post('/',checkRole("USER"), validationCreatePostRules, checkRules, postController.createPost);
-router.get('/',checkRole("ADMIN"), postController.getPosts);
+router.get('/'/*checkRole("USER")*/, postController.getPosts);
 router.get('/:userId',checkRole("ADMIN"), postController.getOnePost);
 router.put('/', validationUpdatePostRules, checkRules, postController.updatePost);
 router.delete('/:userId', postController.deletePost);
